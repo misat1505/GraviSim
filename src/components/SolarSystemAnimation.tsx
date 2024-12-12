@@ -2,6 +2,7 @@ import { useBodiesContext } from "@/context/BodiesContext";
 import { Body } from "@/types/Body";
 import React, { useRef, useEffect, useState } from "react";
 import BodiesDisplayer from "./BodiesDisplayer";
+import { Slider } from "./ui/slider";
 
 const G = 6.6743e-11;
 const dt = 3600 * 24;
@@ -166,18 +167,17 @@ const SolarSystem = () => {
         onMouseUp={handleMouseUp}
       />
       <div>
+        <div className="my-4">
+          <h2 className="font-bold text-xl mb-4">Time Multiplier</h2>
+          <Slider
+            min={0.1}
+            step={0.1}
+            max={10}
+            defaultValue={[1]}
+            onValueChange={(value) => setTimeMultiplier(value[0])}
+          />
+        </div>
         <BodiesDisplayer />
-        <h2>Time Multiplier</h2>
-        <input
-          type="range"
-          min={0.1}
-          step={0.1}
-          max={10}
-          defaultValue={1}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setTimeMultiplier(parseFloat(e.target.value))
-          }
-        />
       </div>
     </div>
   );

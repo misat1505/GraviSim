@@ -20,6 +20,7 @@ const BodiesDisplayer = () => {
 
   return (
     <div className="w-96 bg-slate-100">
+      <h2 className="font-bold text-xl p-4 rounded-sm">Bodies</h2>
       <Accordion type="single" collapsible className="w-full">
         {bodies.map((body, idx) => (
           <AccordionItem value={`item-${idx}`} key={idx}>
