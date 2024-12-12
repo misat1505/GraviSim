@@ -108,7 +108,7 @@ const SolarSystem = () => {
     ctx.font = `${30}px Arial`;
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
-    ctx.fillText(`time: ${timeMultiplier}x`, 700, 50);
+    ctx.fillText(`time: ${timeMultiplier}x`, 1100, 50);
   };
 
   useEffect(() => {
@@ -155,10 +155,10 @@ const SolarSystem = () => {
   };
 
   return (
-    <div className="flex space-x-4">
+    <div className="flex space-x-4 w-full justify-around items-center px-4 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
       <canvas
         ref={canvasRef}
-        width={800}
+        width={1200}
         height={800}
         onWheel={handleWheel}
         onMouseDown={handleMouseDown}
