@@ -9,6 +9,7 @@ const dt = 3600 * 24;
 const SolarSystem = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [bodies, setBodies] = useState<Body[]>(initBodies);
+  const [timeMultiplier, setTimeMultiplier] = useState(1);
 
   const [zoom, setZoom] = useState(0.00000_00001);
   const [offset, setOffset] = useState<[number, number]>([0, 0]);
@@ -52,12 +53,12 @@ const SolarSystem = () => {
         forces[index][1] / body.mass,
       ];
       const newVelocity = [
-        body.velocity[0] + acceleration[0] * dt,
-        body.velocity[1] + acceleration[1] * dt,
+        body.velocity[0] + acceleration[0] * dt * timeMultiplier,
+        body.velocity[1] + acceleration[1] * dt * timeMultiplier,
       ];
       const newPosition = [
-        body.position[0] + newVelocity[0] * dt,
-        body.position[1] + newVelocity[1] * dt,
+        body.position[0] + newVelocity[0] * dt * timeMultiplier,
+        body.position[1] + newVelocity[1] * dt * timeMultiplier,
       ];
 
       return {
@@ -96,13 +97,12 @@ const SolarSystem = () => {
 
       ctx.beginPath();
       ctx.arc(x, y, size, 0, 2 * Math.PI);
-      ctx.fillStyle = body.name === "Sun" ? "yellow" : "white";
+      ctx.fillStyle = body.color;
       ctx.fill();
 
       ctx.font = `${12}px Arial`;
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
-      console.log(x, y - size - 10);
       ctx.fillText(body.name, x, y - size - 10);
     });
   };
@@ -114,21 +114,16 @@ const SolarSystem = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let animationFrame: number;
-
-    const animate = () => {
+    const intervalId = setInterval(() => {
       setBodies((prevBodies) => {
         const updatedBodies = updatePositionsAndVelocities(prevBodies);
         drawBodies(ctx, updatedBodies);
         return updatedBodies;
       });
-      animationFrame = requestAnimationFrame(animate);
-    };
+    }, 20);
 
-    animate();
-
-    return () => cancelAnimationFrame(animationFrame);
-  }, [zoom, offset]);
+    return () => clearInterval(intervalId);
+  }, [zoom, offset, timeMultiplier]);
 
   const handleMassChange = (name: string, newMass: number) => {
     setBodies((prevBodies) =>
@@ -188,6 +183,18 @@ const SolarSystem = () => {
             }
           />
         ))}
+
+        <h2>Time Multiplier</h2>
+        <input
+          type="range"
+          min={0.1}
+          step={0.1}
+          max={10}
+          defaultValue={1}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTimeMultiplier(parseFloat(e.target.value))
+          }
+        />
       </div>
     </div>
   );
