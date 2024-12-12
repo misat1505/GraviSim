@@ -140,10 +140,6 @@ const SolarSystem: React.FC = () => {
     });
   };
 
-  useEffect(() => {
-    console.log(bodies);
-  }, []);
-
   const drawBodies = (ctx: CanvasRenderingContext2D, bodies: Body[]) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.fillStyle = "black";
@@ -165,7 +161,6 @@ const SolarSystem: React.FC = () => {
       });
       ctx.stroke();
 
-      // Draw body
       const x = centerX + body.position[0] * zoom;
       const y = centerY + body.position[1] * zoom;
       const size = body.size * zoom;
@@ -175,7 +170,7 @@ const SolarSystem: React.FC = () => {
       ctx.fillStyle = body.name === "Sun" ? "yellow" : "white";
       ctx.fill();
 
-      ctx.font = `${1200000 * zoom}px Arial`;
+      ctx.font = `${12}px Arial`;
       ctx.fillStyle = "white";
       ctx.textAlign = "center";
       console.log(x, y - size - 10);
