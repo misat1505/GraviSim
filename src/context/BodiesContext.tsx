@@ -1,4 +1,10 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Body } from "../types/Body";
 import { bodies as initBodies } from "../data/bodies";
 
@@ -22,6 +28,10 @@ export const useBodiesContext = () => {
 
 const BodiesProvider = ({ children }: BodiesContextProps) => {
   const [bodies, setBodies] = useState<Body[]>(initBodies);
+
+  useEffect(() => {
+    console.log(bodies);
+  }, [bodies]);
 
   return (
     <BodiesContext.Provider value={{ bodies, setBodies }}>

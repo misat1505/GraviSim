@@ -34,8 +34,7 @@ const BodiesDisplayer = () => {
                 max={10}
                 defaultValue={[1]}
                 onValueChange={(value) => {
-                  console.log(value);
-                  handleMassChange(body.name, value[0]);
+                  handleMassChange(body.name, value[0] * body.mass);
                 }}
               />
             </AccordionContent>
