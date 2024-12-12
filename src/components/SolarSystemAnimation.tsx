@@ -5,7 +5,6 @@ import MassSlider from "./MassSlider";
 
 const G = 6.6743e-11;
 const dt = 3600 * 24;
-const SCALE_FACTOR = 0.000005;
 
 const SolarSystem = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
