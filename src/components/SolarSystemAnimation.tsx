@@ -105,6 +105,11 @@ const SolarSystem = () => {
       ctx.textAlign = "center";
       ctx.fillText(body.name, x, y - size - 10);
     });
+
+    ctx.font = `${30}px Arial`;
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText(`time: ${timeMultiplier}x`, 700, 50);
   };
 
   useEffect(() => {
