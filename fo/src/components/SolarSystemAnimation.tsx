@@ -1,127 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
+import { Body } from "../types/Body";
+import { bodies as initBodies } from "../data/bodies";
+import MassSlider from "./MassSlider";
 
 const G = 6.6743e-11;
-const AU = 1.496e11;
 const dt = 3600 * 24;
 const SCALE_FACTOR = 0.000005;
 
-interface Body {
-  name: string;
-  mass: number;
-  position: [number, number];
-  velocity: [number, number];
-  size: number;
-  trace: [number, number][];
-  color: string;
-}
-
-interface SliderProps {
-  name: string;
-  initialValue: number;
-  onChange: (value: number) => void;
-}
-
-const Slider: React.FC<SliderProps> = ({ name, initialValue, onChange }) => {
-  return (
-    <div>
-      <label>{name}: </label>
-      <input
-        type="range"
-        min="0.1"
-        max="10"
-        step="0.1"
-        defaultValue={initialValue}
-        onChange={(e) => onChange(parseFloat(e.target.value))}
-      />
-    </div>
-  );
-};
-
-const SolarSystem: React.FC = () => {
+const SolarSystem = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [bodies, setBodies] = useState<Body[]>([
-    {
-      name: "Sun",
-      mass: 1.989e30,
-      position: [0, 0],
-      velocity: [0, 0],
-      size: 1_391_000,
-      color: "yellow",
-      trace: [[0, 0]],
-    },
-    {
-      name: "Mercury",
-      mass: 3.285e23,
-      position: [0.39 * AU, 0],
-      velocity: [0, 47.87e3],
-      size: 4_880,
-      color: "gray",
-      trace: [[0.39 * AU, 0]],
-    },
-    {
-      name: "Venus",
-      mass: 4.867e24,
-      position: [0.723 * AU, 0],
-      velocity: [0, 35.02e3],
-      size: 12_104,
-      color: "orange",
-      trace: [[0.723 * AU, 0]],
-    },
-    {
-      name: "Earth",
-      mass: 5.972e24,
-      position: [AU, 0],
-      velocity: [0, 29.78e3],
-      size: 12_742,
-      color: "blue",
-      trace: [[AU, 0]],
-    },
-    {
-      name: "Mars",
-      mass: 6.39e23,
-      position: [1.5 * AU, 0],
-      velocity: [0, 24.077e3],
-      size: 6_779,
-      color: "red",
-      trace: [[1.5 * AU, 0]],
-    },
-    {
-      name: "Jupiter",
-      mass: 1.898e27,
-      position: [5.2 * AU, 0],
-      velocity: [0, 13.07e3],
-      size: 139_820,
-      color: "brown",
-      trace: [[5.2 * AU, 0]],
-    },
-    {
-      name: "Saturn",
-      mass: 5.683e26,
-      position: [9.5 * AU, 0],
-      velocity: [0, 9.69e3],
-      size: 116_460,
-      color: "goldenrod",
-      trace: [[9.5 * AU, 0]],
-    },
-    {
-      name: "Uranus",
-      mass: 8.681e25,
-      position: [19.8 * AU, 0],
-      velocity: [0, 6.81e3],
-      size: 50_724,
-      color: "cyan",
-      trace: [[19.8 * AU, 0]],
-    },
-    {
-      name: "Neptune",
-      mass: 1.024e26,
-      position: [30 * AU, 0],
-      velocity: [0, 5.43e3],
-      size: 49_244,
-      color: "blueviolet",
-      trace: [[30 * AU, 0]],
-    },
-  ]);
+  const [bodies, setBodies] = useState<Body[]>(initBodies);
 
   const [zoom, setZoom] = useState(0.00000_00001);
   const [offset, setOffset] = useState<[number, number]>([0, 0]);
@@ -289,11 +177,16 @@ const SolarSystem: React.FC = () => {
       />
       <div style={{ marginLeft: "1rem" }}>
         {bodies.map((body) => (
-          <Slider
+          <MassSlider
             key={body.name}
-            name={body.name}
-            initialValue={1}
-            onChange={(value) => handleMassChange(body.name, body.mass * value)}
+            body={body}
+            defaultValue={1}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleMassChange(
+                body.name,
+                body.mass * parseFloat(e.target.value)
+              )
+            }
           />
         ))}
       </div>
