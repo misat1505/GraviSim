@@ -12,6 +12,7 @@ interface Body {
   velocity: [number, number];
   size: number;
   trace: [number, number][];
+  color: string;
 }
 
 interface SliderProps {
@@ -45,6 +46,7 @@ const SolarSystem: React.FC = () => {
       position: [0, 0],
       velocity: [0, 0],
       size: 1_391_000,
+      color: "yellow",
       trace: [[0, 0]],
     },
     {
@@ -53,6 +55,7 @@ const SolarSystem: React.FC = () => {
       position: [0.39 * AU, 0],
       velocity: [0, 47.87e3],
       size: 4_880,
+      color: "gray",
       trace: [[0.39 * AU, 0]],
     },
     {
@@ -61,6 +64,7 @@ const SolarSystem: React.FC = () => {
       position: [0.723 * AU, 0],
       velocity: [0, 35.02e3],
       size: 12_104,
+      color: "orange",
       trace: [[0.723 * AU, 0]],
     },
     {
@@ -69,6 +73,7 @@ const SolarSystem: React.FC = () => {
       position: [AU, 0],
       velocity: [0, 29.78e3],
       size: 12_742,
+      color: "blue",
       trace: [[AU, 0]],
     },
     {
@@ -77,7 +82,44 @@ const SolarSystem: React.FC = () => {
       position: [1.5 * AU, 0],
       velocity: [0, 24.077e3],
       size: 6_779,
+      color: "red",
       trace: [[1.5 * AU, 0]],
+    },
+    {
+      name: "Jupiter",
+      mass: 1.898e27,
+      position: [5.2 * AU, 0],
+      velocity: [0, 13.07e3],
+      size: 139_820,
+      color: "brown",
+      trace: [[5.2 * AU, 0]],
+    },
+    {
+      name: "Saturn",
+      mass: 5.683e26,
+      position: [9.5 * AU, 0],
+      velocity: [0, 9.69e3],
+      size: 116_460,
+      color: "goldenrod",
+      trace: [[9.5 * AU, 0]],
+    },
+    {
+      name: "Uranus",
+      mass: 8.681e25,
+      position: [19.8 * AU, 0],
+      velocity: [0, 6.81e3],
+      size: 50_724,
+      color: "cyan",
+      trace: [[19.8 * AU, 0]],
+    },
+    {
+      name: "Neptune",
+      mass: 1.024e26,
+      position: [30 * AU, 0],
+      velocity: [0, 5.43e3],
+      size: 49_244,
+      color: "blueviolet",
+      trace: [[30 * AU, 0]],
     },
   ]);
 
@@ -151,7 +193,7 @@ const SolarSystem: React.FC = () => {
     bodies.forEach((body) => {
       // Draw trace
       ctx.beginPath();
-      ctx.strokeStyle = body.name === "Sun" ? "orange" : "gray";
+      ctx.strokeStyle = body.color;
       ctx.lineWidth = 0.5;
       body.trace.forEach(([x, y], i) => {
         const traceX = centerX + x * zoom;
@@ -235,7 +277,7 @@ const SolarSystem: React.FC = () => {
   };
 
   return (
-    <div>
+    <div style={{ display: "flex" }}>
       <canvas
         ref={canvasRef}
         width={800}
@@ -245,7 +287,7 @@ const SolarSystem: React.FC = () => {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
       />
-      <div>
+      <div style={{ marginLeft: "1rem" }}>
         {bodies.map((body) => (
           <Slider
             key={body.name}
