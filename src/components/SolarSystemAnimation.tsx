@@ -1,14 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Body } from "../types/Body";
-import { bodies as initBodies } from "../data/bodies";
 import MassSlider from "./MassSlider";
+import { useBodiesContext } from "../context/BodiesContext";
+import BodiesDisplayer from "./BodiesDisplayer";
 
 const G = 6.6743e-11;
 const dt = 3600 * 24;
 
 const SolarSystem = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [bodies, setBodies] = useState<Body[]>(initBodies);
+  const { bodies, setBodies } = useBodiesContext();
   const [timeMultiplier, setTimeMultiplier] = useState(1);
 
   const [zoom, setZoom] = useState(0.00000_00001);
@@ -174,7 +175,8 @@ const SolarSystem = () => {
         onMouseUp={handleMouseUp}
       />
       <div style={{ marginLeft: "1rem" }}>
-        {bodies.map((body) => (
+        <BodiesDisplayer />
+        {/* {bodies.map((body) => (
           <MassSlider
             key={body.name}
             body={body}
@@ -186,7 +188,7 @@ const SolarSystem = () => {
               )
             }
           />
-        ))}
+        ))} */}
 
         <h2>Time Multiplier</h2>
         <input
