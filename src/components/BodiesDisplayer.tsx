@@ -5,9 +5,18 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useBodiesContext } from "@/context/BodiesContext";
+import { Slider } from "./ui/slider";
 
 const BodiesDisplayer = () => {
-  const { bodies } = useBodiesContext();
+  const { bodies, setBodies } = useBodiesContext();
+
+  const handleMassChange = (name: string, newMass: number) => {
+    setBodies((prevBodies) =>
+      prevBodies.map((body) =>
+        body.name === name ? { ...body, mass: newMass } : body
+      )
+    );
+  };
 
   return (
     <div className="w-96 bg-slate-100">
@@ -18,7 +27,16 @@ const BodiesDisplayer = () => {
               {body.name}
             </AccordionTrigger>
             <AccordionContent className="p-4">
-              Yes. It adheres to the WAI-ARIA design pattern.
+              <Slider
+                min={0.1}
+                step={0.1}
+                max={10}
+                defaultValue={[1]}
+                onValueChange={(value) => {
+                  console.log(value);
+                  handleMassChange(body.name, value[0]);
+                }}
+              />
             </AccordionContent>
           </AccordionItem>
         ))}

@@ -1,7 +1,6 @@
+import { useBodiesContext } from "@/context/BodiesContext";
+import { Body } from "@/types/Body";
 import React, { useRef, useEffect, useState } from "react";
-import { Body } from "../types/Body";
-import MassSlider from "./MassSlider";
-import { useBodiesContext } from "../context/BodiesContext";
 import BodiesDisplayer from "./BodiesDisplayer";
 
 const G = 6.6743e-11;
@@ -9,7 +8,7 @@ const dt = 3600 * 24;
 
 const SolarSystem = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const { bodies, setBodies } = useBodiesContext();
+  const { setBodies } = useBodiesContext();
   const [timeMultiplier, setTimeMultiplier] = useState(1);
 
   const [zoom, setZoom] = useState(0.00000_00001);
@@ -130,14 +129,6 @@ const SolarSystem = () => {
     return () => clearInterval(intervalId);
   }, [zoom, offset, timeMultiplier]);
 
-  const handleMassChange = (name: string, newMass: number) => {
-    setBodies((prevBodies) =>
-      prevBodies.map((body) =>
-        body.name === name ? { ...body, mass: newMass } : body
-      )
-    );
-  };
-
   const handleWheel = (event: React.WheelEvent) => {
     setZoom((prevZoom) =>
       Math.max(0.00000_00001, prevZoom - event.deltaY * 0.000000000001)
@@ -164,7 +155,7 @@ const SolarSystem = () => {
   };
 
   return (
-    <div style={{ display: "flex" }}>
+    <div className="flex space-x-4">
       <canvas
         ref={canvasRef}
         width={800}
@@ -174,22 +165,8 @@ const SolarSystem = () => {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
       />
-      <div style={{ marginLeft: "1rem" }}>
+      <div>
         <BodiesDisplayer />
-        {/* {bodies.map((body) => (
-          <MassSlider
-            key={body.name}
-            body={body}
-            defaultValue={1}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              handleMassChange(
-                body.name,
-                body.mass * parseFloat(e.target.value)
-              )
-            }
-          />
-        ))} */}
-
         <h2>Time Multiplier</h2>
         <input
           type="range"
