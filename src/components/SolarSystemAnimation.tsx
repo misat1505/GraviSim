@@ -79,7 +79,6 @@ const SolarSystem = () => {
     const centerY = ctx.canvas.height / 2 + offset[1];
 
     bodies.forEach((body) => {
-      // Draw trace
       ctx.beginPath();
       ctx.strokeStyle = body.color;
       ctx.lineWidth = 0.5;
