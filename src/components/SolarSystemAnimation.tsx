@@ -3,7 +3,6 @@ import { Body } from "@/types/Body";
 import React, { useRef, useEffect, useState } from "react";
 import BodiesDisplayer from "./BodiesDisplayer";
 import { Slider } from "./ui/slider";
-import { Switch } from "./ui/switch";
 
 const G = 6.6743e-11;
 const dt = 3600 * 24;

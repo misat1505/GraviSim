@@ -113,12 +113,11 @@ const TraceToggle = ({ body }: TraceToggleProps) => {
   return (
     <div className="m-2 bg-slate-300/80 p-1 rounded-sm flex items-center justify-between h-12">
       <h2 className="font-semibold">Toggle trace visibilty</h2>
-      <div className="w-11">
-        <Switch
-          checked={body.isShowingTrace}
-          onClick={handleToggleTraceVisibility}
-        />
-      </div>
+      <Switch
+        className="block"
+        checked={body.isShowingTrace}
+        onClick={handleToggleTraceVisibility}
+      />
     </div>
   );
 };
