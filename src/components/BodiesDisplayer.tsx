@@ -74,7 +74,7 @@ const MassSlider = ({ body }: MassSliderProps) => {
           className="font-semibold w-8 h-8 text-xl"
           onClick={() => setMassMultiplier((prev) => Math.max(0.1, prev - 0.1))}
         >
-          -
+          <div className="mt-[-0.2rem]">-</div>
         </Button>
         <Slider
           min={0.1}
@@ -89,7 +89,7 @@ const MassSlider = ({ body }: MassSliderProps) => {
           className="font-semibold w-8 h-8 text-xl"
           onClick={() => setMassMultiplier((prev) => Math.min(10, prev + 0.1))}
         >
-          +
+          <div className="mt-[-0.2rem]">+</div>
         </Button>
       </div>
     </div>
@@ -114,7 +114,6 @@ const TraceToggle = ({ body }: TraceToggleProps) => {
     <div className="m-2 bg-slate-300/80 p-1 rounded-sm flex items-center justify-between h-12">
       <h2 className="font-semibold">Toggle trace visibilty</h2>
       <Switch
-        className="block"
         checked={body.isShowingTrace}
         onClick={handleToggleTraceVisibility}
       />
