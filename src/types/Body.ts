@@ -6,4 +6,5 @@ export type Body = {
   size: number;
   trace: [number, number][];
   color: string;
+  isShowingTrace: boolean;
 };

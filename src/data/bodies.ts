@@ -11,6 +11,7 @@ export const bodies: Body[] = [
     size: 1_391_000,
     color: "yellow",
     trace: [[0, 0]],
+    isShowingTrace: true,
   },
   {
     name: "Mercury",
@@ -20,6 +21,7 @@ export const bodies: Body[] = [
     size: 4_880,
     color: "gray",
     trace: [[0.39 * AU, 0]],
+    isShowingTrace: true,
   },
   {
     name: "Venus",
@@ -29,6 +31,7 @@ export const bodies: Body[] = [
     size: 12_104,
     color: "orange",
     trace: [[0.723 * AU, 0]],
+    isShowingTrace: true,
   },
   {
     name: "Earth",
@@ -38,6 +41,7 @@ export const bodies: Body[] = [
     size: 12_742,
     color: "blue",
     trace: [[AU, 0]],
+    isShowingTrace: true,
   },
   {
     name: "Mars",
@@ -47,6 +51,7 @@ export const bodies: Body[] = [
     size: 6_779,
     color: "red",
     trace: [[1.5 * AU, 0]],
+    isShowingTrace: true,
   },
   {
     name: "Jupiter",
@@ -56,6 +61,7 @@ export const bodies: Body[] = [
     size: 139_820,
     color: "brown",
     trace: [[5.2 * AU, 0]],
+    isShowingTrace: true,
   },
   {
     name: "Saturn",
@@ -65,6 +71,7 @@ export const bodies: Body[] = [
     size: 116_460,
     color: "goldenrod",
     trace: [[9.5 * AU, 0]],
+    isShowingTrace: true,
   },
   {
     name: "Uranus",
@@ -74,6 +81,7 @@ export const bodies: Body[] = [
     size: 50_724,
     color: "cyan",
     trace: [[19.8 * AU, 0]],
+    isShowingTrace: true,
   },
   {
     name: "Neptune",
@@ -83,5 +91,6 @@ export const bodies: Body[] = [
     size: 49_244,
     color: "blueviolet",
     trace: [[30 * AU, 0]],
+    isShowingTrace: true,
   },
 ];

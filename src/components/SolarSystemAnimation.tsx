@@ -3,6 +3,7 @@ import { Body } from "@/types/Body";
 import React, { useRef, useEffect, useState } from "react";
 import BodiesDisplayer from "./BodiesDisplayer";
 import { Slider } from "./ui/slider";
+import { Switch } from "./ui/switch";
 
 const G = 6.6743e-11;
 const dt = 3600 * 24;
@@ -83,13 +84,15 @@ const SolarSystem = () => {
       ctx.beginPath();
       ctx.strokeStyle = body.color;
       ctx.lineWidth = 0.5;
-      body.trace.forEach(([x, y], i) => {
-        const traceX = centerX + x * zoom;
-        const traceY = centerY + y * zoom;
-        if (i === 0) ctx.moveTo(traceX, traceY);
-        else ctx.lineTo(traceX, traceY);
-      });
-      ctx.stroke();
+      if (body.isShowingTrace) {
+        body.trace.forEach(([x, y], i) => {
+          const traceX = centerX + x * zoom;
+          const traceY = centerY + y * zoom;
+          if (i === 0) ctx.moveTo(traceX, traceY);
+          else ctx.lineTo(traceX, traceY);
+        });
+        ctx.stroke();
+      }
 
       const x = centerX + body.position[0] * zoom;
       const y = centerY + body.position[1] * zoom;
