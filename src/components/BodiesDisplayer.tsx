@@ -8,7 +8,7 @@ import { useBodiesContext } from "@/context/BodiesContext";
 import { Slider } from "./ui/slider";
 
 const BodiesDisplayer = () => {
-  const { bodies, setBodies } = useBodiesContext();
+  const { bodies, setBodies, initBodies } = useBodiesContext();
 
   const handleMassChange = (name: string, newMass: number) => {
     setBodies((prevBodies) =>
@@ -34,7 +34,11 @@ const BodiesDisplayer = () => {
                 max={10}
                 defaultValue={[1]}
                 onValueChange={(value) => {
-                  handleMassChange(body.name, value[0] * body.mass);
+                  handleMassChange(
+                    body.name,
+                    value[0] *
+                      initBodies.find((b) => b.name === body.name)!.mass
+                  );
                 }}
               />
             </AccordionContent>

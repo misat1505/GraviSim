@@ -1,10 +1,4 @@
-import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { Body } from "../types/Body";
 import { bodies as initBodies } from "../data/bodies";
 
@@ -13,6 +7,7 @@ type BodiesContextProps = PropsWithChildren & {};
 type BodiesContextProvidedValues = {
   bodies: Body[];
   setBodies: React.Dispatch<React.SetStateAction<Body[]>>;
+  initBodies: Body[];
 };
 
 const BodiesContext = createContext<BodiesContextProvidedValues | undefined>(
@@ -29,12 +24,8 @@ export const useBodiesContext = () => {
 const BodiesProvider = ({ children }: BodiesContextProps) => {
   const [bodies, setBodies] = useState<Body[]>(initBodies);
 
-  useEffect(() => {
-    console.log(bodies);
-  }, [bodies]);
-
   return (
-    <BodiesContext.Provider value={{ bodies, setBodies }}>
+    <BodiesContext.Provider value={{ bodies, setBodies, initBodies }}>
       {children}
     </BodiesContext.Provider>
   );
