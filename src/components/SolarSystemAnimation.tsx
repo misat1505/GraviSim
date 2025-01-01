@@ -124,11 +124,6 @@ const SolarSystem = () => {
       ctx.textAlign = "center";
       ctx.fillText(body.name, x, y - size - 10);
     });
-
-    ctx.font = `${30}px Arial`;
-    ctx.fillStyle = "white";
-    ctx.textAlign = "center";
-    ctx.fillText(`time: ${timeMultiplier}x`, 1100, 50);
   };
 
   useEffect(() => {
@@ -138,13 +133,16 @@ const SolarSystem = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const intervalId = setInterval(() => {
-      setBodies((prevBodies) => {
-        const updatedBodies = updatePositionsAndVelocities(prevBodies);
-        drawBodies(ctx, updatedBodies);
-        return updatedBodies;
-      });
-    }, 40 / timeMultiplier);
+    const intervalId = setInterval(
+      () => {
+        setBodies((prevBodies) => {
+          const updatedBodies = updatePositionsAndVelocities(prevBodies);
+          drawBodies(ctx, updatedBodies);
+          return updatedBodies;
+        });
+      },
+      timeMultiplier === 0 ? 1_000_000 : 40 / timeMultiplier
+    );
 
     return () => clearInterval(intervalId);
   }, [zoom, offset, timeMultiplier, tracesLength]);
@@ -190,8 +188,12 @@ const SolarSystem = () => {
           <div className="w-[420px]">
             <div className="border rounded-sm p-4">
               <h2 className="font-bold text-lg text-nowrap">
-                Time Multiplier ({timeMultiplier}x -{" "}
-                {(25 * timeMultiplier).toFixed(1)} days / second)
+                Time Multiplier (
+                {timeMultiplier === 0
+                  ? "stopped"
+                  : `${timeMultiplier}x - 
+                ${(25 * timeMultiplier).toFixed(1)} days / sec.`}
+                )
               </h2>
               <p className="text-sm text-muted-foreground mb-4">
                 Control the speed of the animation. A higher multiplier makes
@@ -199,7 +201,7 @@ const SolarSystem = () => {
                 can be throttled.
               </p>
               <Slider
-                min={0.1}
+                min={0}
                 step={0.1}
                 max={10}
                 defaultValue={[1]}
