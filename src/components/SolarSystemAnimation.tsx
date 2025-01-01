@@ -67,14 +67,14 @@ const SolarSystem = () => {
 
       // v = v0 + a * t
       const newVelocity = [
-        body.velocity[0] + acceleration[0] * dt * timeMultiplier,
-        body.velocity[1] + acceleration[1] * dt * timeMultiplier,
+        body.velocity[0] + acceleration[0] * dt,
+        body.velocity[1] + acceleration[1] * dt,
       ];
 
       // x = x0 + v * t
       const newPosition = [
-        body.position[0] + newVelocity[0] * dt * timeMultiplier,
-        body.position[1] + newVelocity[1] * dt * timeMultiplier,
+        body.position[0] + newVelocity[0] * dt,
+        body.position[1] + newVelocity[1] * dt,
       ];
 
       return {
@@ -142,7 +142,7 @@ const SolarSystem = () => {
         drawBodies(ctx, updatedBodies);
         return updatedBodies;
       });
-    }, 20);
+    }, 40 / timeMultiplier);
 
     return () => clearInterval(intervalId);
   }, [zoom, offset, timeMultiplier]);
