@@ -82,10 +82,7 @@ const SolarSystem = () => {
         ...body,
         velocity: newVelocity,
         position: newPosition,
-        trace:
-          tracesLength > 0
-            ? [...body.trace, newPosition].slice(-tracesLength)
-            : [],
+        trace: [...body.trace, newPosition],
       } as Body;
     });
   };
@@ -102,8 +99,9 @@ const SolarSystem = () => {
       ctx.beginPath();
       ctx.strokeStyle = body.color;
       ctx.lineWidth = 0.5;
-      if (body.isShowingTrace) {
+      if (body.isShowingTrace && tracesLength > 0) {
         body.trace.forEach(([x, y], i) => {
+          if (i < body.trace.length - tracesLength) return;
           const traceX = centerX + x * zoom;
           const traceY = centerY + y * zoom;
           if (i === 0) ctx.moveTo(traceX, traceY);
@@ -198,7 +196,7 @@ const SolarSystem = () => {
               <p className="text-sm text-muted-foreground mb-4">
                 Control the speed of the animation. A higher multiplier makes
                 the simulation faster. If your PC struggles, the animation speed
-                can be throttled to reduce load.
+                can be throttled.
               </p>
               <Slider
                 min={0.1}
