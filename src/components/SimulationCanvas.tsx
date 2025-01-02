@@ -7,7 +7,8 @@ import { useSimulationContext } from "@/context/SimulationContext";
 type SimulationCanvasProps = React.CanvasHTMLAttributes<HTMLCanvasElement>;
 
 const SimulationCanvas = ({ ...rest }: SimulationCanvasProps) => {
-  const { tracesLength, timeMultiplier, isPaused } = useSimulationContext();
+  const { tracesLength, timeMultiplier, isPaused, setDate } =
+    useSimulationContext();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const { bodies, setBodies } = useBodiesContext();
 
@@ -15,6 +16,14 @@ const SimulationCanvas = ({ ...rest }: SimulationCanvasProps) => {
   const [offset, setOffset] = useState<[number, number]>([0, 0]);
   const isDragging = useRef(false);
   const dragStart = useRef<[number, number] | null>(null);
+
+  const updateDate = () => {
+    setDate((prevDate) => {
+      const newDate = new Date(prevDate);
+      newDate.setDate(newDate.getDate() + 1);
+      return newDate;
+    });
+  };
 
   const drawBodies = (ctx: CanvasRenderingContext2D, bodies: Body[]) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -64,6 +73,7 @@ const SimulationCanvas = ({ ...rest }: SimulationCanvasProps) => {
 
     const intervalId = setInterval(
       () => {
+        updateDate();
         setBodies((prevBodies) => {
           const updatedBodies = updatePositionsAndVelocities(prevBodies);
           drawBodies(ctx, updatedBodies);
@@ -114,12 +124,14 @@ const SimulationCanvas = ({ ...rest }: SimulationCanvasProps) => {
     setOffset(newOffset);
 
     const ctx = canvas?.getContext("2d");
-    if (ctx && timeMultiplier > 0 && !isPaused)
+    if (ctx && timeMultiplier > 0 && !isPaused) {
       setBodies((prevBodies) => {
         const updatedBodies = updatePositionsAndVelocities(prevBodies);
         drawBodies(ctx, updatedBodies);
         return updatedBodies;
       });
+      updateDate();
+    }
   };
 
   const handleMouseDown = (event: React.MouseEvent) => {
@@ -136,12 +148,14 @@ const SimulationCanvas = ({ ...rest }: SimulationCanvasProps) => {
 
       const canvas = canvasRef.current;
       const ctx = canvas?.getContext("2d");
-      if (ctx && timeMultiplier > 0 && !isPaused)
+      if (ctx && timeMultiplier > 0 && !isPaused) {
         setBodies((prevBodies) => {
           const updatedBodies = updatePositionsAndVelocities(prevBodies);
           drawBodies(ctx, updatedBodies);
           return updatedBodies;
         });
+        updateDate();
+      }
     }
   };
 

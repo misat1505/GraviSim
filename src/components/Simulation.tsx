@@ -1,6 +1,7 @@
 import SimulationCanvas from "./SimulationCanvas";
 import SimulationSettings from "./SimulationSettings";
 import SimulationButtons from "./SimulationButtons";
+import DateDisplay from "./DateDisplay";
 
 const Simulation = () => {
   return (
@@ -9,6 +10,7 @@ const Simulation = () => {
         <div className="relative">
           <SimulationCanvas />
           <SimulationButtons />
+          <DateDisplay />
         </div>
         <SimulationSettings />
       </div>

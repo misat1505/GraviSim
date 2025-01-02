@@ -1,26 +1,29 @@
 import { AU } from "@/constants";
 import { Body } from "../types/Body";
 
-const G = 6.67430e-11;
+const G = 6.6743e-11;
 const massOfSun = 1.989e30;
 
-const calculateInitialVelocity = (position: [number, number], massOfSun: number): [number, number] => {
+const calculateInitialVelocity = (
+  position: [number, number],
+  massOfSun: number
+): [number, number] => {
   const r = Math.sqrt(position[0] ** 2 + position[1] ** 2);
-  const v = Math.sqrt(G * massOfSun / r);
-  
-  const velocityX = -position[1] / r * v;
-  const velocityY = position[0] / r * v;
+  const v = Math.sqrt((G * massOfSun) / r);
+
+  const velocityX = (-position[1] / r) * v;
+  const velocityY = (position[0] / r) * v;
 
   return [velocityX, velocityY];
 };
 
 const mercury_position: [number, number] = [-0.388481 * AU, -0.157692 * AU];
 const venus_position: [number, number] = [0.453472 * AU, 0.523121 * AU];
-const earth_position: [number, number] = [-0.178600 * AU, 0.887224 * AU];
-const mars_position: [number, number] = [-0.521577 * AU, 1.381600 * AU];
+const earth_position: [number, number] = [-0.1974 * AU, 0.9793 * AU];
+const mars_position: [number, number] = [-0.521577 * AU, 1.3816 * AU];
 const jupiter_position: [number, number] = [1.056247 * AU, 4.578783 * AU];
 const saturn_position: [number, number] = [9.463669 * AU, -1.482112 * AU];
-const uranus_position: [number, number] = [11.103997 * AU, 14.799690 * AU];
+const uranus_position: [number, number] = [11.103997 * AU, 14.79969 * AU];
 const neptune_position: [number, number] = [29.892156 * AU, -0.313781 * AU];
 
 export const bodies: Body[] = [
