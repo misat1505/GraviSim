@@ -1,6 +1,5 @@
+import { AU } from "@/constants";
 import { Body } from "../types/Body";
-
-const AU = 1.496e11;
 
 export const bodies: Body[] = [
   {

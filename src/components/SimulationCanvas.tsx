@@ -1,6 +1,6 @@
 import { useBodiesContext } from "@/context/BodiesContext";
 import { useEffect, useRef, useState } from "react";
-import { updatePositionsAndVelocities } from "./physcis/gravity";
+import { updatePositionsAndVelocities } from "../physcis/gravity";
 import { Body } from "@/types/Body";
 import { useSimulationContext } from "@/context/SimulationContext";
 

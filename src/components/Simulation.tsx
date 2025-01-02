@@ -1,6 +1,6 @@
 import SimulationCanvas from "./SimulationCanvas";
 import SimulationSettings from "./SimulationSettings";
-import PauseButton from "./PauseButton";
+import SimulationButtons from "./SimulationButtons";
 
 const Simulation = () => {
   return (
@@ -8,7 +8,7 @@ const Simulation = () => {
       <div className="flex space-x-4 overflow-x-hidden justify-around items-start px-4">
         <div className="relative">
           <SimulationCanvas />
-          <PauseButton />
+          <SimulationButtons />
         </div>
         <SimulationSettings />
       </div>
