@@ -2,17 +2,12 @@ import { useBodiesContext } from "@/context/BodiesContext";
 import { useEffect, useRef, useState } from "react";
 import { updatePositionsAndVelocities } from "./physcis/gravity";
 import { Body } from "@/types/Body";
+import { useSimulationContext } from "@/context/SimulationContext";
 
-type SimulationCanvasProps = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
-  timeMultiplier: number;
-  tracesLength: number;
-};
+type SimulationCanvasProps = React.CanvasHTMLAttributes<HTMLCanvasElement>;
 
-const SimulationCanvas = ({
-  timeMultiplier,
-  tracesLength,
-  ...rest
-}: SimulationCanvasProps) => {
+const SimulationCanvas = ({ ...rest }: SimulationCanvasProps) => {
+  const { tracesLength, timeMultiplier } = useSimulationContext();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const { bodies, setBodies } = useBodiesContext();
 
