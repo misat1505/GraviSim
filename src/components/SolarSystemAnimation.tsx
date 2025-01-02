@@ -46,7 +46,6 @@ const SolarSystem = () => {
   };
 
   const updatePositionsAndVelocities = (bodies: Body[]): Body[] => {
-    console.log("updating...");
     const forces = bodies.map(() => [0, 0] as [number, number]);
 
     // dla każdego ciała obliczenie siły wobec wszystkich pozostałych
@@ -161,6 +160,14 @@ const SolarSystem = () => {
     setZoom((prevZoom) =>
       Math.max(0.00000_00001, prevZoom - event.deltaY * 0.000000000001)
     );
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (canvas && ctx)
+      setBodies((prevBodies) => {
+        const updatedBodies = updatePositionsAndVelocities(prevBodies);
+        drawBodies(ctx, updatedBodies);
+        return updatedBodies;
+      });
   };
 
   const handleMouseDown = (event: React.MouseEvent) => {
@@ -174,6 +181,15 @@ const SolarSystem = () => {
       const dy = event.clientY - dragStart.current[1];
       setOffset((prevOffset) => [prevOffset[0] + dx, prevOffset[1] + dy]);
       dragStart.current = [event.clientX, event.clientY];
+
+      const canvas = canvasRef.current;
+      const ctx = canvas?.getContext("2d");
+      if (canvas && ctx)
+        setBodies((prevBodies) => {
+          const updatedBodies = updatePositionsAndVelocities(prevBodies);
+          drawBodies(ctx, updatedBodies);
+          return updatedBodies;
+        });
     }
   };
 
