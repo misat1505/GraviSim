@@ -104,7 +104,7 @@ const MassSlider = ({
         />
         <Button
           className="font-semibold w-8 h-8 text-xl"
-          onClick={() => handleMassChange(Math.min(10, multiplier + 0.1))}
+          onClick={() => handleMassChange(Math.min(1000000, multiplier + 0.1))}
         >
           <div className="mt-[-0.2rem]">+</div>
         </Button>
