@@ -9,7 +9,7 @@ const dt = 3600 * 24;
 
 const SolarSystem = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const { setBodies } = useBodiesContext();
+  const { bodies, setBodies } = useBodiesContext();
   const [timeMultiplier, setTimeMultiplier] = useState(1);
   const [tracesLength, setTracesLength] = useState(Infinity);
 
@@ -46,6 +46,7 @@ const SolarSystem = () => {
   };
 
   const updatePositionsAndVelocities = (bodies: Body[]): Body[] => {
+    console.log("updating...");
     const forces = bodies.map(() => [0, 0] as [number, number]);
 
     // dla każdego ciała obliczenie siły wobec wszystkich pozostałych
@@ -146,6 +147,15 @@ const SolarSystem = () => {
 
     return () => clearInterval(intervalId);
   }, [zoom, offset, timeMultiplier, tracesLength]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    drawBodies(ctx, bodies);
+  }, [zoom, offset]);
 
   const handleWheel = (event: React.WheelEvent) => {
     setZoom((prevZoom) =>
