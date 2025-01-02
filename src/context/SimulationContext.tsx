@@ -7,6 +7,8 @@ type SimulationContextProvidedValues = {
   setTimeMultiplier: React.Dispatch<React.SetStateAction<number>>;
   tracesLength: number;
   setTracesLength: React.Dispatch<React.SetStateAction<number>>;
+  isPaused: boolean;
+  toggleIsPaused: () => void;
 };
 
 const SimulationContext = createContext<
@@ -23,6 +25,9 @@ export const useSimulationContext = () => {
 const SimulationProvider = ({ children }: SimulationContextProps) => {
   const [timeMultiplier, setTimeMultiplier] = useState(1);
   const [tracesLength, setTracesLength] = useState(Infinity);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const toggleIsPaused = () => setIsPaused((prev) => !prev);
 
   return (
     <SimulationContext.Provider
@@ -31,6 +36,8 @@ const SimulationProvider = ({ children }: SimulationContextProps) => {
         setTimeMultiplier,
         tracesLength,
         setTracesLength,
+        isPaused,
+        toggleIsPaused,
       }}
     >
       {children}

@@ -7,7 +7,7 @@ import { useSimulationContext } from "@/context/SimulationContext";
 type SimulationCanvasProps = React.CanvasHTMLAttributes<HTMLCanvasElement>;
 
 const SimulationCanvas = ({ ...rest }: SimulationCanvasProps) => {
-  const { tracesLength, timeMultiplier } = useSimulationContext();
+  const { tracesLength, timeMultiplier, isPaused } = useSimulationContext();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const { bodies, setBodies } = useBodiesContext();
 
@@ -70,11 +70,11 @@ const SimulationCanvas = ({ ...rest }: SimulationCanvasProps) => {
           return updatedBodies;
         });
       },
-      timeMultiplier === 0 ? 1_000_000 : 40 / timeMultiplier
+      timeMultiplier === 0 || isPaused ? 1_000_000 : 40 / timeMultiplier
     );
 
     return () => clearInterval(intervalId);
-  }, [zoom, offset, timeMultiplier, tracesLength]);
+  }, [zoom, offset, timeMultiplier, tracesLength, isPaused]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -114,7 +114,7 @@ const SimulationCanvas = ({ ...rest }: SimulationCanvasProps) => {
     setOffset(newOffset);
 
     const ctx = canvas?.getContext("2d");
-    if (ctx && timeMultiplier > 0)
+    if (ctx && timeMultiplier > 0 && !isPaused)
       setBodies((prevBodies) => {
         const updatedBodies = updatePositionsAndVelocities(prevBodies);
         drawBodies(ctx, updatedBodies);
@@ -136,7 +136,7 @@ const SimulationCanvas = ({ ...rest }: SimulationCanvasProps) => {
 
       const canvas = canvasRef.current;
       const ctx = canvas?.getContext("2d");
-      if (ctx && timeMultiplier > 0)
+      if (ctx && timeMultiplier > 0 && !isPaused)
         setBodies((prevBodies) => {
           const updatedBodies = updatePositionsAndVelocities(prevBodies);
           drawBodies(ctx, updatedBodies);
