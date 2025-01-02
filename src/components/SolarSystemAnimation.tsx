@@ -157,10 +157,33 @@ const SolarSystem = () => {
   }, [zoom, offset]);
 
   const handleWheel = (event: React.WheelEvent) => {
-    setZoom((prevZoom) =>
-      Math.max(0.00000_00001, prevZoom - event.deltaY * 0.000000000001)
-    );
+    event.preventDefault();
+
     const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+
+    const centerX = canvas.width / 2 + offset[0];
+    const centerY = canvas.height / 2 + offset[1];
+    const worldX = (mouseX - centerX) / zoom;
+    const worldY = (mouseY - centerY) / zoom;
+
+    const newZoom = Math.max(
+      0.00000_00001,
+      zoom - event.deltaY * 0.000000000001
+    );
+
+    const newOffset: [number, number] = [
+      offset[0] - worldX * (newZoom - zoom),
+      offset[1] - worldY * (newZoom - zoom),
+    ];
+
+    setZoom(newZoom);
+    setOffset(newOffset);
+
     const ctx = canvas?.getContext("2d");
     if (canvas && ctx && timeMultiplier > 0)
       setBodies((prevBodies) => {
