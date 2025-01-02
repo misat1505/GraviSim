@@ -1,10 +1,10 @@
-import SolarSystem from "./components/SolarSystemAnimation";
+import Simulation from "./components/Simulation";
 import BodiesProvider from "./context/BodiesContext";
 
 function App() {
   return (
     <BodiesProvider>
-      <SolarSystem />
+      <Simulation />
     </BodiesProvider>
   );
 }
