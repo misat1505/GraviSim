@@ -98,7 +98,7 @@ const MassSlider = ({
         <Slider
           min={0.1}
           step={0.1}
-          max={10}
+          max={1000000}
           value={[multiplier]}
           onValueChange={(value) => handleMassChange(value[0])}
         />
