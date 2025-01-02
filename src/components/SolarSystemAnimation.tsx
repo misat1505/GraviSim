@@ -162,7 +162,7 @@ const SolarSystem = () => {
     );
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
-    if (canvas && ctx)
+    if (canvas && ctx && timeMultiplier > 0)
       setBodies((prevBodies) => {
         const updatedBodies = updatePositionsAndVelocities(prevBodies);
         drawBodies(ctx, updatedBodies);
@@ -184,7 +184,7 @@ const SolarSystem = () => {
 
       const canvas = canvasRef.current;
       const ctx = canvas?.getContext("2d");
-      if (canvas && ctx)
+      if (canvas && ctx && timeMultiplier > 0)
         setBodies((prevBodies) => {
           const updatedBodies = updatePositionsAndVelocities(prevBodies);
           drawBodies(ctx, updatedBodies);
