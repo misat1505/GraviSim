@@ -64,22 +64,24 @@ const SimulationCanvas = ({ ...rest }: SimulationCanvasProps) => {
     });
   };
 
-  useEffect(() => {
+  const updateSimulation = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    setBodies((prevBodies) => {
+      const updatedBodies = updatePositionsAndVelocities(prevBodies);
+      drawBodies(ctx, updatedBodies);
+      return updatedBodies;
+    });
+    updateDate();
+  };
+
+  useEffect(() => {
     const intervalId = setInterval(
-      () => {
-        updateDate();
-        setBodies((prevBodies) => {
-          const updatedBodies = updatePositionsAndVelocities(prevBodies);
-          drawBodies(ctx, updatedBodies);
-          return updatedBodies;
-        });
-      },
+      updateSimulation,
       timeMultiplier === 0 || isPaused ? 1_000_000 : 40 / timeMultiplier
     );
 
@@ -123,15 +125,7 @@ const SimulationCanvas = ({ ...rest }: SimulationCanvasProps) => {
     setZoom(newZoom);
     setOffset(newOffset);
 
-    const ctx = canvas?.getContext("2d");
-    if (ctx && timeMultiplier > 0 && !isPaused) {
-      setBodies((prevBodies) => {
-        const updatedBodies = updatePositionsAndVelocities(prevBodies);
-        drawBodies(ctx, updatedBodies);
-        return updatedBodies;
-      });
-      updateDate();
-    }
+    if (timeMultiplier > 0 && !isPaused) updateSimulation();
   };
 
   const handleMouseDown = (event: React.MouseEvent) => {
@@ -146,16 +140,7 @@ const SimulationCanvas = ({ ...rest }: SimulationCanvasProps) => {
       setOffset((prevOffset) => [prevOffset[0] + dx, prevOffset[1] + dy]);
       dragStart.current = [event.clientX, event.clientY];
 
-      const canvas = canvasRef.current;
-      const ctx = canvas?.getContext("2d");
-      if (ctx && timeMultiplier > 0 && !isPaused) {
-        setBodies((prevBodies) => {
-          const updatedBodies = updatePositionsAndVelocities(prevBodies);
-          drawBodies(ctx, updatedBodies);
-          return updatedBodies;
-        });
-        updateDate();
-      }
+      if (timeMultiplier > 0 && !isPaused) updateSimulation();
     }
   };
 
